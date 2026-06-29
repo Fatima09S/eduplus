@@ -22,6 +22,8 @@ app:
   jwt:
     secret: u8wrvgTsRLgGQcZdiOXKGc6KmSfNX/1Fch12r7uRchJEOzOiJZhFnflBWJ/HykgH5UQeBJI+wRD44Tb34X4WAw==
     expiration: 86400000
+    access-token-expiration: 900000
+    refresh-token-expiration: 604800000
   upload:
     dir: uploads/
 
