@@ -20,7 +20,7 @@ spring:
 
 app:
   jwt:
-    secret: eduplusSecretKey2026IPDDakarProjetL3Informatique
+    secret: u8wrvgTsRLgGQcZdiOXKGc6KmSfNX/1Fch12r7uRchJEOzOiJZhFnflBWJ/HykgH5UQeBJI+wRD44Tb34X4WAw==
     expiration: 86400000
   upload:
     dir: uploads/
