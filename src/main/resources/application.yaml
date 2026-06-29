@@ -22,6 +22,10 @@ app:
   jwt:
     secret: eduplusSecretKey2026IPDDakarProjetL3Informatique
     expiration: 86400000
+    access-token-expiration: 900000
+    refresh-token-expiration: 604800000
+
+
   upload:
     dir: uploads/
 
