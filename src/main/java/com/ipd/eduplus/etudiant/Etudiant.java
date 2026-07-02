@@ -1,5 +1,5 @@
 // src/main/java/com/ipd/eduplus/etudiant/Etudiant.java
-package com.ipd.eduplus;
+package com.ipd.eduplus.etudiant;
 
 import jakarta.persistence.*;
 import lombok.*;

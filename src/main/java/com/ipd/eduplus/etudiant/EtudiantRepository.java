@@ -1,7 +1,6 @@
 // src/main/java/com/ipd/eduplus/etudiant/EtudiantRepository.java
-package com.ipd.eduplus;
+package com.ipd.eduplus.etudiant;
 
-import com.ipd.eduplus.etudiant.Etudiant;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

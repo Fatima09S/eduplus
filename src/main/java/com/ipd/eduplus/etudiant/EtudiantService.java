@@ -1,7 +1,5 @@
-package com.ipd.eduplus;
+package com.ipd.eduplus.etudiant;
 
-import com.ipd.eduplus.etudiant.Etudiant;
-import com.ipd.eduplus.etudiant.EtudiantRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
