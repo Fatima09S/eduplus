@@ -7,6 +7,10 @@ import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 import java.util.List;
 
@@ -20,10 +24,20 @@ public class EnseignantController {
         this.enseignantService = enseignantService;
     }
 
-    // GET /enseignants
+    // GET /enseignants?page=0&size=10&sort=nom&direction=asc
     @GetMapping
-    public ResponseEntity<List<EnseignantResponseDTO>> findAll() {
-        return ResponseEntity.ok(enseignantService.findAll());
+    public ResponseEntity<Page<EnseignantResponseDTO>> findAll(
+            @RequestParam(defaultValue = "0")    int page,
+            @RequestParam(defaultValue = "10")   int size,
+            @RequestParam(defaultValue = "nom")  String sort,
+            @RequestParam(defaultValue = "asc")  String direction) {
+
+        Sort.Direction sortDirection = direction.equalsIgnoreCase("desc")
+                ? Sort.Direction.DESC
+                : Sort.Direction.ASC;
+
+        Pageable pageable = PageRequest.of(page, size, Sort.by(sortDirection, sort));
+        return ResponseEntity.ok(enseignantService.findAll(pageable));
     }
 
     // GET /enseignants/{id}
