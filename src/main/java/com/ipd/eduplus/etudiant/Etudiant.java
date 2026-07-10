@@ -30,6 +30,10 @@ public class Etudiant {
 
     private LocalDate dateNaissance;
 
+    private String photoProfil;
+
+    private String documentPdf;
+
     @Column(name = "numero_etudiant", unique = true)
     private String numeroEtudiant;
 }
