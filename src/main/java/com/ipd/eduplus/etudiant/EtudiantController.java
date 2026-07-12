@@ -20,14 +20,19 @@ public class EtudiantController {
     private final EtudiantService etudiantService;
     private final EtudiantMapper etudiantMapper;
 
-    // GET /etudiants?page=0&size=10&sort=nom
+    // GET /etudiants?page=0&size=10&sort=nom&direction=asc
     @GetMapping
     public ResponseEntity<Page<EtudiantResponseDTO>> findAll(
-            @RequestParam(defaultValue = "0")  int page,
-            @RequestParam(defaultValue = "10") int size,
-            @RequestParam(defaultValue = "nom") String sort) {
+            @RequestParam(defaultValue = "0")    int page,
+            @RequestParam(defaultValue = "10")   int size,
+            @RequestParam(defaultValue = "nom")  String sort,
+            @RequestParam(defaultValue = "asc")  String direction) {
 
-        Pageable pageable = PageRequest.of(page, size, Sort.by(sort).ascending());
+        Sort.Direction sortDirection = direction.equalsIgnoreCase("desc")
+                ? Sort.Direction.DESC
+                : Sort.Direction.ASC;
+
+        Pageable pageable = PageRequest.of(page, size, Sort.by(sortDirection, sort));
         Page<EtudiantResponseDTO> etudiants = etudiantService.findAll(pageable)
                 .map(etudiantMapper::toDTO);
         return ResponseEntity.ok(etudiants);

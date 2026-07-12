@@ -5,6 +5,8 @@ import com.ipd.eduplus.enseignant.dto.EnseignantRequestDTO;
 import com.ipd.eduplus.enseignant.dto.EnseignantResponseDTO;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,11 +24,11 @@ public class EnseignantService {
         this.enseignantMapper = enseignantMapper;
     }
 
-    public List<EnseignantResponseDTO> findAll() {
-        return enseignantRepository.findAll()
-                .stream()
-                .map(enseignantMapper::toDTO)
-                .collect(Collectors.toList());
+
+    // Remplace l'ancienne méthode findAll()
+    public Page<EnseignantResponseDTO> findAll(Pageable pageable) {
+        return enseignantRepository.findAll(pageable)
+                .map(enseignantMapper::toDTO);
     }
 
     public EnseignantResponseDTO findById(Long id) {
