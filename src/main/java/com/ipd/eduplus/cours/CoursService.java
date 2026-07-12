@@ -1,43 +1,59 @@
 package com.ipd.eduplus.cours;
 
+import com.ipd.eduplus.cours.dto.CoursRequestDTO;
+import com.ipd.eduplus.cours.dto.CoursResponseDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class CoursService {
 
     private final CoursRepository coursRepository;
+    private final CoursMapper coursMapper;
 
-    public List<Cours> findAll() {
-        return coursRepository.findAll();
+    public List<CoursResponseDTO> findAll() {
+        return coursRepository.findAll()
+                .stream()
+                .map(coursMapper::toDTO)
+                .collect(Collectors.toList());
     }
 
-    public Cours findById(Long id) {
-        return coursRepository.findById(id)
+    public CoursResponseDTO findById(Long id) {
+        Cours cours = coursRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Cours non trouvé avec l'id : " + id));
+        return coursMapper.toDTO(cours);
     }
 
-    public Cours save(Cours cours) {
-        if (coursRepository.existsByCode(cours.getCode())) {
-            throw new RuntimeException("Un cours avec le code " + cours.getCode() + " existe déjà");
+    public CoursResponseDTO save(CoursRequestDTO dto) {
+        if (coursRepository.existsByCode(dto.getCode())) {
+            throw new RuntimeException("Un cours avec le code " + dto.getCode() + " existe déjà");
         }
-        return coursRepository.save(cours);
+        Cours cours = coursMapper.toEntity(dto);
+        return coursMapper.toDTO(coursRepository.save(cours));
     }
 
-    public Cours update(Long id, Cours cours) {
-        Cours existing = findById(id);
-        existing.setTitre(cours.getTitre());
-        existing.setDescription(cours.getDescription());
-        existing.setCapacite(cours.getCapacite());
-        existing.setCode(cours.getCode());
-        return coursRepository.save(existing);
+    public CoursResponseDTO update(Long id, CoursRequestDTO dto) {
+        Cours existing = coursRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Cours non trouvé avec l'id : " + id));
+        existing.setTitre(dto.getTitre());
+        existing.setDescription(dto.getDescription());
+        existing.setCapacite(dto.getCapacite());
+        existing.setCode(dto.getCode());
+        return coursMapper.toDTO(coursRepository.save(existing));
     }
 
     public void delete(Long id) {
-        findById(id);
+        coursRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Cours non trouvé avec l'id : " + id));
         coursRepository.deleteById(id);
+    }
+
+    public Cours findEntityById(Long id) {
+        return coursRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Cours non trouvé avec l'id : " + id));
     }
 }

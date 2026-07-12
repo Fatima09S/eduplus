@@ -1,5 +1,7 @@
 package com.ipd.eduplus.cours;
 
+import com.ipd.eduplus.cours.dto.CoursRequestDTO;
+import com.ipd.eduplus.cours.dto.CoursResponseDTO;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -16,23 +18,24 @@ public class CoursController {
     private final CoursService coursService;
 
     @GetMapping
-    public ResponseEntity<List<Cours>> findAll() {
+    public ResponseEntity<List<CoursResponseDTO>> findAll() {
         return ResponseEntity.ok(coursService.findAll());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Cours> findById(@PathVariable Long id) {
+    public ResponseEntity<CoursResponseDTO> findById(@PathVariable Long id) {
         return ResponseEntity.ok(coursService.findById(id));
     }
 
     @PostMapping
-    public ResponseEntity<Cours> save(@Valid @RequestBody Cours cours) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(coursService.save(cours));
+    public ResponseEntity<CoursResponseDTO> save(@Valid @RequestBody CoursRequestDTO dto) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(coursService.save(dto));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Cours> update(@PathVariable Long id, @Valid @RequestBody Cours cours) {
-        return ResponseEntity.ok(coursService.update(id, cours));
+    public ResponseEntity<CoursResponseDTO> update(@PathVariable Long id,
+                                                   @Valid @RequestBody CoursRequestDTO dto) {
+        return ResponseEntity.ok(coursService.update(id, dto));
     }
 
     @DeleteMapping("/{id}")
