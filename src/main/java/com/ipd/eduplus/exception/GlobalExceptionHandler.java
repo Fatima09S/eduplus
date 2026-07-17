@@ -126,11 +126,13 @@ public class GlobalExceptionHandler {
             Exception ex,
             HttpServletRequest request) {
 
+        ex.printStackTrace(); 
+
         return ResponseEntity
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(buildErrorResponse(
                         HttpStatus.INTERNAL_SERVER_ERROR,
-                        "Une erreur interne est survenue.",
+                        ex.getClass().getName() + " : " + ex.getMessage(),
                         request));
     }
 
