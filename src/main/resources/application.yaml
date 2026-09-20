@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/eduplus_db
-    username: root
-    password: ""
+    url: ${DB_URL:jdbc:mysql://localhost:3306/eduplus_db}
+    username: ${DB_USERNAME:root}
+    password: ${DB_PASSWORD:}
 
   jpa:
     hibernate:
@@ -27,4 +27,5 @@ app:
     dir: uploads/
 
 server:
-  port: 8080
+  port: 8081
+
